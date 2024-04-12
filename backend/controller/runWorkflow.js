@@ -70,11 +70,24 @@ async function processAndConvertToLowercase(filePath) {
 
 
 
-async function introduceDelay() {
-  // Introduce an asynchronous delay
+// async function introduceDelay() {
+//   // Introduce an asynchronous delay
+//   // Example implementation:
+//   await new Promise(resolve => setTimeout(resolve, 60000)); // 5-second delay
+//   console.log('Asynchronous delay introduced');
+// }
+function introduceDelay() {
+  // Introduce a synchronous delay
   // Example implementation:
-  await new Promise(resolve => setTimeout(resolve, 60000)); // 5-second delay
-  console.log('Asynchronous delay introduced');
+  const delayInMilliseconds = 60000; // 60 seconds
+  const startTime = Date.now();
+  let currentTime = startTime;
+
+  while (currentTime - startTime < delayInMilliseconds) {
+    currentTime = Date.now();
+  }
+
+  console.log('Synchronous delay introduced');
 }
 
 async function convertCsvToJson(filePath) {

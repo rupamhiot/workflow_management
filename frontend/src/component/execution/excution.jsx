@@ -29,9 +29,6 @@ const CallWorkflow = () => {
 
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // setError(null);
-    // dispatch(runWorkflow(workflowId,"./controller/CSV/1.csv"))
     e.preventDefault();
     setError(null);
 
@@ -86,7 +83,7 @@ const CallWorkflow = () => {
         
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <h1>{message}</h1>
+      <h1 style={{color : '#c2fbd7'}}>{message}</h1>
     </div>
   );
 };
