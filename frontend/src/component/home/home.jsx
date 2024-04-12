@@ -29,7 +29,7 @@ const home = () => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
       localStorage.setItem(flowKey, JSON.stringify(flow));
-       alert(JSON.stringify(flow));
+      //  alert(JSON.stringify(flow));
       //  console.log(JSON.stringify(flow));
       dispatch(saveWorkflow( JSON.stringify(flow)))
       
