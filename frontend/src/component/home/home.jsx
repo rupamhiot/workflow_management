@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback,useMemo } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -10,7 +10,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import Sidebar from './Slidebar';
 import './home.css';
-import {saveWorkflow} from "../../action/workflowaction"
+import { saveWorkflow } from "../../action/workflowaction"
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 let id = 0;
@@ -29,13 +29,11 @@ const home = () => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
       localStorage.setItem(flowKey, JSON.stringify(flow));
-      //  alert(JSON.stringify(flow));
-      //  console.log(JSON.stringify(flow));
-      dispatch(saveWorkflow( JSON.stringify(flow)))
-      
+      dispatch(saveWorkflow(JSON.stringify(flow)))
+
     }
   }, [reactFlowInstance])
-   function executionPage() {
+  function executionPage() {
     navigate('/execution')
   }
   const onConnect = useCallback(
@@ -62,19 +60,19 @@ const home = () => {
         x: event.clientX,
         y: event.clientY,
       });
-      
+
       const newNode = {
         id: lebel,
         type,
         position,
-        data: {label: `${lebel}`},
+        data: { label: `${lebel}` },
       };
       setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance],
   );
   return (
-    <div className="dndflow" style={{ width: '80vw', height: '70vh', backgroundColor:'#F5F5F5'}}>
+    <div className="dndflow" style={{ width: '80vw', height: '70vh', backgroundColor: '#F5F5F5' }}>
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
@@ -92,13 +90,13 @@ const home = () => {
             <Controls />
             <Panel position="top">
               <button onClick={onSave}>save Workflow</button>
-              <button className="btn-1"onClick={executionPage}>Execute Workflow</button>
+              <button className="btn-1" onClick={executionPage}>Execute Workflow</button>
             </Panel>
-           
+
           </ReactFlow>
           <Sidebar />
         </div>
-        
+
       </ReactFlowProvider>
     </div>
   )

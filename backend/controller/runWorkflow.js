@@ -7,20 +7,20 @@ const catchAsyncError = require('../middleware/catchAsyncError');
 
 // file path id and flow id
 const idVsFunctionmap = new Map();
-idVsFunctionmap.set('filter',processAndConvertToLowercase)
-idVsFunctionmap.set('wait',introduceDelay)
-idVsFunctionmap.set('convert',convertCsvToJson)
-idVsFunctionmap.set('send',sendPostRequest)
+idVsFunctionmap.set('filter', processAndConvertToLowercase)
+idVsFunctionmap.set('wait', introduceDelay)
+idVsFunctionmap.set('convert', convertCsvToJson)
+idVsFunctionmap.set('send', sendPostRequest)
 
 
 // Route to execute workflow
-exports.runWorkflow =catchAsyncError(async(req,res)=> {
+exports.runWorkflow = catchAsyncError(async (req, res) => {
 
-  const { wf_id,fl_path } = req.body;
+  const { wf_id, fl_path } = req.body;
   let filePath = `./${fl_path}`;
   let id = wf_id;
   console.log(filePath);
-  
+
   try {
     // Find workflow by ID
     const workflow = await Workflow.findById(id);
@@ -28,13 +28,13 @@ exports.runWorkflow =catchAsyncError(async(req,res)=> {
       return res.status(404).json({ success: false, message: `Workflow not found with ID: ${id}` });
     }
 
-    let excutetableFunction1 =  idVsFunctionmap.get(workflow.edges[0].source);
+    let excutetableFunction1 = idVsFunctionmap.get(workflow.edges[0].source);
     await excutetableFunction1(filePath);
     // Execute tasks in workflow
-    for (const edge of workflow.edges) {     
-     let excutetableFunction2 =  idVsFunctionmap.get(edge.target);
-     await excutetableFunction2(filePath);
-     // 
+    for (const edge of workflow.edges) {
+      let excutetableFunction2 = idVsFunctionmap.get(edge.target);
+      await excutetableFunction2(filePath);
+      // 
     }
     res.status(200).json({ success: true, message: 'Workflow executed successfully' });
   } catch (error) {
@@ -121,7 +121,7 @@ function convertCsvToJson(filePath) {
 function sendPostRequest() {
   const url = 'https://api.requestcatcher.com';
   try {
-   axios.post(url);
+    axios.post(url);
   } catch (error) {
     console.error('Error sending POST request:', error);
     throw new Error(`Error sending POST request: ${error.message}`);
