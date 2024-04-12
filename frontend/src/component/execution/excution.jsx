@@ -60,15 +60,15 @@ const CallWorkflow = () => {
 
   return (
     <div className='background_workflow'>
-      <h2>Call Workflow</h2>
+      <h2>Workflow Execution</h2>
       <form onSubmit={handleSubmit}>
         <div className='form_div'>
         <div>
-          <label htmlFor="file">Upload CSV file:</label>
+          <label className='label_form1' htmlFor="file">Upload CSV file:</label>
           <input type="file" id="file" name='file' accept=".csv" onChange={handleFileChange} />
         </div>
         <div>
-          <label htmlFor="workflow">Select Workflow:</label>
+          <label className ="label_form1"htmlFor="workflow">Select Workflow:</label>
           <select id="workflow" value={workflowId} onChange={handleWorkflowChange}>
             <option value="">Select Workflow</option>
             {fetchedData && fetchedData.map(workflow => (

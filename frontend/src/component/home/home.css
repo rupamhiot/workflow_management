@@ -5,6 +5,9 @@
     height: 100%;
     
   }
+ .background_workflow >h2{
+  color:#5b28bf ;
+ } 
 /* CSS */
 button {
   background-color: #c2fbd7;
@@ -40,6 +43,7 @@ button:hover {
     padding: 15px 10px;
     font-size: 12px;
     background: #fcfcfc;
+    /* color: #0041d0; */
   }
   
   .dndflow aside .description {
@@ -60,6 +64,9 @@ button:hover {
   
   .dndflow .dndnode.input {
     border-color: #0041d0;
+  }
+  .label_form1{
+    color: #0041d0;
   }
   
   .dndflow .dndnode.output {
