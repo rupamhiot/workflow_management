@@ -5,8 +5,6 @@ const bodyParser = require("body-parser");
 const errorMiddleware = require("./middleware/error");
 const cors = require('cors');
 const multer = require('multer');
-// const fs = require('fs');
-// const upload = multer({ dest: "./controller/CSV" });
 const path = require('path');
 
 const storage = multer.diskStorage({
@@ -14,14 +12,11 @@ const storage = multer.diskStorage({
         cb(null, 'upload/') // directory where files will be saved
     },
     filename: function (req, file, cb) {
-        // Set the file name to be originalname + current timestamp
         cb(null, file.originalname);
     }
 });
 
 const upload = multer({ storage: storage });
-
-
 // Use CORS middleware
 app.use(cors());
 app.use(express.json());
@@ -39,8 +34,6 @@ app.post('/api/v1/upload',upload.single('file'),(req,res)=>{
     // Send the file path in the response
     res.json(filePath);
 })
-
-
 // Middleware for Errors
 app.use(errorMiddleware);
 module.exports = app;

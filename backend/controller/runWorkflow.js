@@ -4,10 +4,6 @@ const fs = require('fs');
 const axios = require('axios');
 const Workflow = require('../models/workflowModel');
 const catchAsyncError = require('../middleware/catchAsyncError');
-// const fs = require('fs');
-
-// const { Transform } = require('stream');
-
 
 // file path id and flow id
 const idVsFunctionmap = new Map();
@@ -33,11 +29,11 @@ exports.runWorkflow =catchAsyncError(async(req,res)=> {
     }
 
     let excutetableFunction1 =  idVsFunctionmap.get(workflow.edges[0].source);
-    excutetableFunction1(filePath);
+    await excutetableFunction1(filePath);
     // Execute tasks in workflow
     for (const edge of workflow.edges) {     
      let excutetableFunction2 =  idVsFunctionmap.get(edge.target);
-     excutetableFunction2(filePath);
+     await excutetableFunction2(filePath);
      // 
     }
     res.status(200).json({ success: true, message: 'Workflow executed successfully' });
@@ -48,24 +44,44 @@ exports.runWorkflow =catchAsyncError(async(req,res)=> {
 });
 
 // Helper functions
-async function processAndConvertToLowercase(filePath) {
-  // convert column values to lowercase
-  const data = [];
-  fs.createReadStream(filePath)
-    .pipe(csv())
-    .on('data', (row) => {
-      // Convert column values to lowercase
-      const lowercaseRow = {};
-      for (const key in row) {
-        if (row.hasOwnProperty(key)) {
-          lowercaseRow[key.toLowerCase()] = row[key].toLowerCase();
+function processAndConvertToLowercase(filePath) {
+  return new Promise((resolve, reject) => {
+    const data = [];
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on('data', (row) => {
+        // Convert column values to lowercase
+        const lowercaseRow = {};
+        for (const key in row) {
+          if (row.hasOwnProperty(key)) {
+            lowercaseRow[key.toLowerCase()] = row[key].toLowerCase();
+          }
         }
-      }
-      data.push(lowercaseRow);
-    })
-    .on('end', () => {
-      console.log('Data processed and converted to lowercase:', data);
-    });
+        data.push(lowercaseRow);
+      })
+      .on('end', () => {
+        console.log('Data processed and converted to lowercase:', data);
+        // Write the modified data back to the file
+        const outputStream = fs.createWriteStream(filePath);
+        outputStream.write(''); // Clear existing content
+        data.forEach((row) => {
+          outputStream.write(`${Object.values(row).join(',')}\n`); // Write each row
+        });
+        outputStream.end();
+        outputStream.on('finish', () => {
+          console.log('File content updated successfully');
+          resolve();
+        });
+        outputStream.on('error', (error) => {
+          console.error('Error updating file content:', error);
+          reject(error);
+        });
+      })
+      .on('error', (error) => {
+        console.error('Error processing data:', error);
+        reject(error);
+      });
+  });
 }
 
 
@@ -82,15 +98,13 @@ function introduceDelay() {
   const delayInMilliseconds = 60000; // 60 seconds
   const startTime = Date.now();
   let currentTime = startTime;
-
   while (currentTime - startTime < delayInMilliseconds) {
     currentTime = Date.now();
   }
-
   console.log('Synchronous delay introduced');
 }
 
-async function convertCsvToJson(filePath) {
+function convertCsvToJson(filePath) {
   // Convert the data from CSV to JSON format
   // Example implementation:
   const jsonData = [];
@@ -104,10 +118,10 @@ async function convertCsvToJson(filePath) {
     });
 }
 
-async function sendPostRequest() {
+function sendPostRequest() {
   const url = 'https://api.requestcatcher.com';
   try {
-    await axios.post(url);
+   axios.post(url);
   } catch (error) {
     console.error('Error sending POST request:', error);
     throw new Error(`Error sending POST request: ${error.message}`);

@@ -18,8 +18,6 @@ exports.saveWorkflow = catchAsyncErrors (async(req,res) =>{
             data: workflow // Optionally, you can send back the saved workflow data
         })
 })
-
-
 // Get all Workflow
 exports.getAllWorkflow = catchAsyncErrors(async(req,res,next)=>{
     const workflows  = await Workflow.find();
@@ -28,23 +26,17 @@ exports.getAllWorkflow = catchAsyncErrors(async(req,res,next)=>{
         data:workflows,
     })
 })
-
 // Get single Workflow
-
 exports.getSingleWorkflow = catchAsyncErrors(async(req,res,next)=>{
     const workflow = await Workflow.findById(req.params.id);
     if(!workflow){
         return next(new ErrorHandler(`workflow does not exist with Id: ${req.params.id}`));
     }
-
     res.status(200).json({
         sucess:true,
         workflow,
     });
 });
-
-
-
 // Delete Workflow
 exports.deleteWorkflow = catchAsyncErrors(async(req,res,next)=>{
     const workflow = await Workflow.findById(req.params.id);
@@ -60,7 +52,6 @@ exports.deleteWorkflow = catchAsyncErrors(async(req,res,next)=>{
     })
 })
 
-// save workflow file
 
 
 
