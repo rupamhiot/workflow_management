@@ -4,7 +4,10 @@ const fs = require('fs');
 const axios = require('axios');
 const Workflow = require('../models/workflowModel');
 const catchAsyncError = require('../middleware/catchAsyncError');
+// const fs = require('fs');
+
 // const { Transform } = require('stream');
+
 
 // file path id and flow id
 const idVsFunctionmap = new Map();
@@ -16,13 +19,11 @@ idVsFunctionmap.set('send',sendPostRequest)
 
 // Route to execute workflow
 exports.runWorkflow =catchAsyncError(async(req,res)=> {
-  const { wf_id,fl_path} = req.body;
-  // console.log(id);
-  // get file
-  // filePath = "./controller/CSV/1.csv";
-  // let id = "66182c0533d1a299fd238491"
-  let filePath = fl_path;
+
+  const { wf_id,fl_path } = req.body;
+  let filePath = `./${fl_path}`;
   let id = wf_id;
+  console.log(filePath);
   
   try {
     // Find workflow by ID

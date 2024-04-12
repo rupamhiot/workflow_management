@@ -47,10 +47,10 @@ export const getAllWorkflow = () => async(dispatch)=>{
     }
 };
 // EXECUTE WORKFLOW
-export const runWorkflow = (wf_id,fl_data) => async(dispatch)=>{
+export const runWorkflow = (wf_id,fl_path) => async(dispatch)=>{
     try{
         dispatch({type:RUN_WORKFLOW_REQUEST});
-        const {data} = await axios.post(`http://localhost:5000/api/v1/workflow/execute`,{wf_id:wf_id},fl_data);
+        const {data} = await axios.post(`http://localhost:5000/api/v1/workflow/execute`,{wf_id:wf_id,fl_path:fl_path});
         dispatch({
             type:RUN_WORKFLOW_SUCCESS,
             payload:data,
