@@ -1,0 +1,75 @@
+/* CallWorkflow.css */
+.background_workflow{
+    background-color:#88c6fc;
+    padding: 20px;
+    width: 80vw;
+    height: 80vh;
+
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color:#86f1fc;
+  }
+
+  
+  .background_workflow>h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  .form_div{
+    margin: auto;
+    padding: 100px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    justify-content: center;
+    margin-top: 1vh;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  } */
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  
