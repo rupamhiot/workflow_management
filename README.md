@@ -12,8 +12,9 @@ Send POST Request Node: Transmits the generated JSON payload to a predefined URL
 
 
 Screenshots
-- ![Screenshot 1](./data/image1.png)
-- ![Screenshot 2](./data/image2.png)
+![alt text](data/image1.png)
+![alt text](data/image2.png)
+
 
 
 Contributing
